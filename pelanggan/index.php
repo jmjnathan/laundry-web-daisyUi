@@ -1,10 +1,10 @@
-   <!DOCTYPE html>
+<!DOCTYPE html>
    <html lang="en">
    <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Admin Dashboard</title>
-      <link href="public/tailwind.css" rel="stylesheet">
+      <link href="../public/tailwind.css" rel="stylesheet">
       <style>
          .sidebar {
             width: 250px;
@@ -51,8 +51,10 @@
       <!-- Sidebar -->
       <div class="sidebar">
          <div class="p-4">
-            <h1 class="text-xl font-bold mb-4">Menu</h1>
-            <ul class="menu w-full">
+            <div class="item-center">
+               <img src="../assets/img/laundry-logo-with-text-space-your-slogan_1447-1423.jpg" alt="Logo" class="w-[150px] h-auto">
+            </div>
+         <ul class="menu w-full">
                <li>
                   <a>
                      <svg
@@ -105,7 +107,7 @@
                   </a>
                </li>
                <li>
-               <a href="./pelanggan/index.php">                     
+               <a href="pelanggan.php">                     
                   <svg
                      xmlns="http://www.w3.org/2000/svg"
                      class="h-5 w-5"
@@ -126,18 +128,80 @@
       </div>
 
       <!-- Navbar -->
-      <div class="navbar">
+      <div class="navbar shadow-md">
          <div class="flex items-center justify-between">
-            <div class="text-lg font-semibold">Welcome, <?php echo htmlspecialchars($name); ?></div>
-            <a href="logout.php" class="text-blue-600 hover:underline">Logout</a>
+            <div class="text-lg font-semibold">
+               Welcome, <?php echo htmlspecialchars($name); ?>
+            </div>
+            <a href="logout.php" class="text-blue-600 hover:underline">
+               Logout
+            </a>
          </div>
       </div>
+
 
       <!-- Main Content -->
       <div class="main-content">
          <div class="bg-EAEFF2 p-3 rounded-lg">
-            <h1 class="text-4xl font-bold">This is the Admin Dashboard</h1>
-            <p>Welcome to the dashboard specifically for admin users.</p>
+            <div class="card bg-white shadow-xl rounded-xl w-auto"> 
+               <div class="m-5">
+                  <div class="pb-5 flex items-center">
+                     <h2 class="text-2xl font-bold">Pelanggan</h2>
+                     <a href="tambah.php" class="btn btn-info ml-auto shadow-sm text-white">Tambah Baru</a>
+                  </div>
+
+
+                  <div class="flex col-span-1 gap-4 w-full">
+               <label class="form-control w-full">
+                  <div class="label">
+                     <span class="label-text">Nama</span>
+                  </div>
+                  <input type="text" placeholder="Cari Pelanggan" class="input input-bordered w-full" />
+               </label>
+
+               <label class="form-control w-full">
+                  <div class="label">
+                     <span class="label-text">Status</span>
+                  </div>
+                  <select class="select select-bordered w-full">
+                     <option disabled selected>Pilih Status</option>
+                     <option>Aktif</option>
+                     <option>Non Aktif</option>
+                  </select>
+               </label>
+            </div>
+
+            <div class="overflow-x-auto justify-center mt-5">
+                  <table class="table table-striped">
+                     <thead>
+                        <tr>
+                           <th class="px-4 py-2">No</th>
+                           <th class="px-4 py-2">Username</th>
+                           <th class="px-4 py-2">Name</th>
+                           <th class="px-4 py-2">Email</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <?php
+                           $sql = "SELECT * FROM pelanggan";
+                           $result = mysqli_query($conn, $sql);
+                           if (mysqli_num_rows($result) > 0) {
+                              while ($row = mysqli_fetch_assoc($result)) {
+                                 echo "<tr>";
+                                 echo "<td class='border px-4 py-2'>" . $row['id'] . "</td>";
+                                 echo "<td class='border px-4 py-2'>" . $row['username'] . "</td>";
+                                 echo "<td class='border px-4 py-2'>" . $row['name'] . "</td>";
+                                 echo "<td class='border px-4 py-2'>" . $row['email'] . "</td>";
+                                 echo "</tr>";
+                              }
+                           }
+                        ?>
+                     </tbody>
+                  </table>
+               </div>
+               
+
+            </div>
          </div>
       </div>
 
